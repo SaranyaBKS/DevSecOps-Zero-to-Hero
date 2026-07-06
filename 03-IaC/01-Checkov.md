@@ -7,7 +7,7 @@
 Terraform can deploy insecure infrastructure without warnings:
 - Public S3 buckets
 - SSH open to the internet
-- No encryption
+- No encryptions
 
 ---
 
