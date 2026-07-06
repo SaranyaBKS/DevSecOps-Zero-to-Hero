@@ -6,11 +6,35 @@
 trigger:
 - main
 
-pool:
-  vmImage: ubuntu-latest
+parameters:
+-name:seedsecrets
+  displayName: 'Seed secrets'
+  type: boolean 
+  default: false
 
+-name:deployToECS
+  displayName:'Deploy to ECS after build'
+  type: boolean
+  default: false
+
+pool:
+name:'ubuntu-latest'
+
+variables:
+  group: 'my-variable-group'
+  
+Stages:
+-stage: BuildAndTaskDefinition
+displayName: 'Build and Task Definition'
+dependsOn: []
+condition: ne('${{ parameters.seedsecrets }}', true)
+jobs:
+- job: BuildAndTaskDefinition 
+displayName: 'Build and push'
 steps:
+-checkout: self
 - script: echo Hello, world!
+sudo yum install -y runc crun
   displayName: 'Run a one-line script'
 
 - script: |
